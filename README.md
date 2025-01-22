@@ -28,3 +28,6 @@ The script also creates a story based on your cat recommending the movie and des
 ## Configuration**
 
 API keys for OpenAI, DeepAI, and Gmail must be configured in a safe `.ENV` file to interact with these APIs.
+
+Example output
+![alt text](https://github.com/suazojaime/CustomEmailAI/blob/main/cutomEmail.png)
