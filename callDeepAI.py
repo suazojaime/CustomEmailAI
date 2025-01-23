@@ -6,6 +6,7 @@ def callAI(message, key):
         "https://api.deepai.org/api/text2img",
         data={
             'text': message,
+            'image_generator_version' : 'hd'
             },
         headers={'api-key': key}
         )

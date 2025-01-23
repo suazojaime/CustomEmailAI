@@ -4,14 +4,14 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv, dotenv_values
+import time
 
 
 def sendEmail(movies, story):
+    load_dotenv()
     
     try:
             port = 465  # For SSL
-            message = MIMEMultipart("alternative")
-            message["Subject"] = "Clover Recomendations"
             smtp_server = "smtp.gmail.com"
             sender_email = os.getenv("SENDER_EMAIL") # Enter your address
             receiver_emails = [os.getenv("RECEIVER_EMAIL1"), os.getenv("RECEIVER_EMAIL2")]  # Enter receiver address   
@@ -38,19 +38,17 @@ def sendEmail(movies, story):
             </body>
             </html>
 
-            '''
-
-            part2 = MIMEText(html, "html")
-            message.attach(part2)
-
-            print(message)
-
-            
+            '''           
 
             for receiver_email in receiver_emails:
-                
+
+                print(f'preparing email for {receiver_email}')
+                message = MIMEMultipart("alternative")
+                message["Subject"] = "Clover Recomendations"                
                 message["From"] = sender_email
                 message["To"] = receiver_email
+                part2 = MIMEText(html, "html")
+                message.attach(part2)
 
                 try:
                     images = []
@@ -73,6 +71,7 @@ def sendEmail(movies, story):
                     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
                         server.login(sender_email, password)
                         server.sendmail(sender_email, receiver_email, message.as_string())
+
                 except Exception as e:
                             print(f'{e} ')
     except Exception as e:
